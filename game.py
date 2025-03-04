@@ -1,6 +1,6 @@
 # Pygame game template
 
-import pygame, sys, config
+import pygame, sys, config, random, shapes
 
 def init_game():
     pygame.init()
@@ -37,6 +37,9 @@ def draw_text(screen, text, font, text_col, x, y):
 def main():
     screen = init_game()
     clock = pygame.time.Clock()
+
+    shapes_list = []
+
     running = True
 
     text_font = pygame.font.SysFont('Arial', 30)
@@ -44,10 +47,48 @@ def main():
         running = handle_events()
         screen.fill(config.COLOR_WHITE)
 
-        draw_text(screen, 'Hello world', text_font, config.COLOR_BLACK, 220, 150)
+        shape_type = random.randrange(3)
+        if shape_type == 0:
+            # Circle
+            new_shape = {
+                'type': 'circle',
+                'color': (random.randrange(255), random.randrange(255), random.randrange(255)),
+                'position': (random.randrange(config.WINDOW_WIDTH), random.randrange(config.WINDOW_HEIGHT)),
+                'radius': random.randrange(100)
+            }
+        elif shape_type == 1:
+            # Rectangle
+            new_shape = {
+                'type': 'rectangle',
+                'color': (random.randrange(255), random.randrange(255), random.randrange(255)),
+                'position': (random.randrange(config.WINDOW_WIDTH - 100), random.randrange(config.WINDOW_HEIGHT - 100)),
+                'width': random.randrange(100),
+                'height': random.randrange(100)
+            }
+        elif shape_type == 2:
+            # Line
+            new_shape = {
+                'type': 'line',
+                'color': (random.randrange(255), random.randrange(255), random.randrange(255)),
+                'start_pos': (random.randrange(config.WINDOW_WIDTH), random.randrange(config.WINDOW_HEIGHT)),
+                'end_pos': (random.randrange(config.WINDOW_WIDTH), random.randrange(config.WINDOW_HEIGHT)),
+                'width': random.randrange(20),
+            }
+        
+        shapes_list.append(new_shape)
 
+        for shape in shapes_list:
+            if shape['type'] == 'circle':
+                shapes.draw_circle1(screen, shape)
+            elif shape['type'] == 'rectangle':
+                shapes.draw_rect1(screen, shape)
+            elif shape['type'] == 'line':
+                shapes.draw_line1(screen, shape)
+
+
+        # draw_text(screen, 'Hello world', text_font, config.COLOR_BLACK, 220, 150)
         # Calling a grid (Comment this out after you are done coding)
-        grid(screen)
+        # grid(screen)
         
         pygame.display.flip()
 

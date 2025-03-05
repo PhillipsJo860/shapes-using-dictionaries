@@ -39,10 +39,9 @@ def main():
     clock = pygame.time.Clock()
 
     shapes_list = []
-
+    
     running = True
-
-    text_font = pygame.font.SysFont('Arial', 30)
+    # text_font = pygame.font.SysFont('Arial', 30)
     while running:
         running = handle_events()
         screen.fill(config.COLOR_WHITE)
